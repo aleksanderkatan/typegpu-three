@@ -1,24 +1,24 @@
 {
-	"name": "three-experiment",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"preview": "vite preview",
-		"check": "biome check --write ."
-	},
-	"devDependencies": {
-		"@biomejs/biome": "latest",
-		"@types/three": "^0.173.0",
-		"typegpu": "0.3.2",
-		"typescript": "~5.6.2",
-		"vite": "^5.4.10"
-	},
-	"dependencies": {
-		"@webgpu/types": "^0.1.51",
-		"three": "^0.173.0"
-	},
-	"packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
+  "name": "three-experiment",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "check": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@types/three": "^0.173.0",
+    "typegpu": "0.3.2",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "@webgpu/types": "^0.1.51",
+    "three": "^0.173.0"
+  },
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
 }
