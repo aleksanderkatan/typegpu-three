@@ -54,15 +54,13 @@ const bindGroup = root.createBindGroup(computeBindGroupLayout, {
 const { vertices, iteration } = computeBindGroupLayout.bound;
 const shader = tgpu['~unstable']
   .computeFn([d.builtin.globalInvocationId], { workgroupSize: [24] })
-  .does(
-    `(@builtin(global_invocation_id) gid: vec3u) {
-  let index = gid.x;
-  let iterationF = f32(iteration);
-  let sign = i32(index%16) * -1;
-  let change = vec4f(0.0, sin(iterationF / 50f) / 300f * f32(sign), 0.0, 0.0);
-  positionBound[index] = positionBound[index] + change;
-}`,
-  )
+  .does(`(@builtin(global_invocation_id) gid: vec3u) {
+    let index = gid.x;
+    let iterationF = f32(iteration);
+    let sign = i32(index%16) * -1;
+    let change = vec4f(0.0, sin(iterationF / 50f) / 300f * f32(sign), 0.0, 0.0);
+    positionBound[index] = positionBound[index] + change;
+  }`)
   .$uses({ positionBound: vertices, iteration });
 
 const computePipeline = root['~unstable']
