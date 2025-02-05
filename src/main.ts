@@ -84,12 +84,11 @@ async function init() {
   renderer = new THREE.WebGPURenderer({
     antialias: true,
     device: root.device,
-    // biome-ignore lint/suspicious/noExplicitAny: <I know it's there!>
-  } as any);
+  });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setAnimationLoop(animate);
-  renderer.setClearColor(new THREE.Color(0, 0, 0), 1);
+  renderer.setClearColor(0x0f0f0f0f, 1);
   document.body.appendChild(renderer.domElement as HTMLCanvasElement);
   await renderer.init();
 
@@ -99,9 +98,7 @@ async function init() {
     0.1,
     100,
   );
-  camera.translateX(5);
-  camera.translateY(0);
-  camera.translateZ(5);
+  camera.position.set(5, 0, 5);
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
@@ -112,9 +109,7 @@ async function init() {
 
   // directional light
   const directionalLight = new THREE.DirectionalLight('#ff9900', 1);
-  directionalLight.translateX(20);
-  directionalLight.translateY(2);
-  directionalLight.translateZ(5);
+  directionalLight.position.set(20, 2, 5);
   directionalLight.lookAt(0, 0, 0);
   scene.add(directionalLight);
 
@@ -128,8 +123,7 @@ async function init() {
     map: texture,
   });
 
-  // biome-ignore lint/suspicious/noExplicitAny: <For some reason it only accepts basic materials>
-  const cube = new THREE.Mesh(geometry, material as any);
+  const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
   // fog
@@ -151,19 +145,12 @@ async function init() {
     const timeMul = 0.01;
     const position = positionStorage.element(TSL.instanceIndex);
     const newPos = position
-      // @ts-ignore: <Proxy magic>
       .add(
-        TSL.vec4(
-          TSL.oscSine(TSL.time.mul(0.1))
-            .mul(timeMul)
-            .sub(0.5 * timeMul),
-          0,
-          0,
-          0,
-        ),
+        TSL.oscSine(TSL.time.mul(0.1))
+          .mul(timeMul)
+          .sub(0.5 * timeMul),
       )
       .toVar();
-    // @ts-ignore: <Proxy magic>
     position.assign(newPos);
   });
   computeNode = computePosition().compute(24);
@@ -190,9 +177,7 @@ async function animate() {
   iterationCounter += 1;
   iterationBuffer.write(iterationCounter);
 
-  // @ts-ignore: <Compute node extends Node>
   renderer.compute(computeNode);
-  // @ts-ignore: <Compute node extends Node>
   renderer.compute(tgpuCompute.computeNode);
 
   await device.queue.onSubmittedWorkDone();

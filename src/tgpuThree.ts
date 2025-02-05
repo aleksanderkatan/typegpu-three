@@ -72,18 +72,14 @@ export async function boundComputeToNode(
   computeNode: THREE.ComputeNode;
   codeNode: THREE.CodeNode;
 }> {
-  // @ts-ignore: <need to access private method to initialize renderer outside of three logic>
   if (!renderer._initialized) {
     await renderer.init();
   }
   const code = tgpu.resolve({
     externals: { fn },
   });
-  // @ts-ignore: <StorageBufferNode extends Node>
   const codeNode = TSL.wgsl(code, buffers);
-  // @ts-ignore: <Proxy magic>
   const c = codeNode.compute(24);
-  // @ts-ignore: <Initialize cache to later hijack pipeline>
   const data = renderer._nodes.getForCompute(c);
   data.computeShader = code;
   const module = device.createShaderModule({
@@ -100,7 +96,6 @@ export async function boundComputeToNode(
     cacheKey,
     usedTimes: 0,
   };
-  // @ts-ignore: <Cache hijacking>
   renderer._pipelines.caches.set(cacheKey, injectionPipeline);
   // @ts-ignore: <Proxy magic>
   const pipelineGpu = renderer.backend.get(injectionPipeline);
