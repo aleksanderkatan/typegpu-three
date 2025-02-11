@@ -103,7 +103,7 @@ async function init() {
     0.1,
     100,
   );
-  camera.position.set(5, 0, 5);
+  camera.position.set(3, 1, 3);
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
