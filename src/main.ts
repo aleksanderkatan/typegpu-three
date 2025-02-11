@@ -66,8 +66,7 @@ const shader = tgpu['~unstable']
       0.0,
     );
     vertices.value[index] = std.add(vertices.value[index], change);
-  })
-  .$uses({ positionBound: vertices, iteration });
+  });
 
 const computePipeline = root['~unstable']
   .withCompute(shader)
