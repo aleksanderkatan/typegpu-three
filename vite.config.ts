@@ -1,3 +1,4 @@
+import typegpu from 'rollup-plugin-typegpu';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -5,4 +6,5 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
+  plugins: [typegpu()],
 });

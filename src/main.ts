@@ -4,6 +4,7 @@ import * as THREE from 'three/webgpu';
 import { OrbitControls } from 'three/addons';
 import tgpu from 'typegpu';
 import * as d from 'typegpu/data';
+import * as std from 'typegpu/std';
 import { boundComputeToNode, getNodeForBuffer } from './tgpuThree.js';
 
 // biome-ignore lint/style/useSingleVarDeclarator: <its fine>
@@ -53,14 +54,19 @@ const bindGroup = root.createBindGroup(computeBindGroupLayout, {
 
 const { vertices, iteration } = computeBindGroupLayout.bound;
 const shader = tgpu['~unstable']
-  .computeFn([d.builtin.globalInvocationId], { workgroupSize: [24] })
-  .does(`(@builtin(global_invocation_id) gid: vec3u) {
-    let index = gid.x;
-    let iterationF = f32(iteration);
-    let sign = i32(index%16) * -1;
-    let change = vec4f(0.0, sin(iterationF / 50f) / 300f * f32(sign), 0.0, 0.0);
-    positionBound[index] = positionBound[index] + change;
-  }`)
+  .computeFn({ gid: d.builtin.globalInvocationId }, { workgroupSize: [24] })
+  .does((input) => {
+    const index = input.gid.x;
+    const iterationF = d.f32(iteration.value);
+    const sign = d.i32(index % 16) * -1;
+    const change = d.vec4f(
+      0.0,
+      (std.sin(iterationF / 50) / 300) * d.f32(sign),
+      0.0,
+      0.0,
+    );
+    vertices.value[index] = std.add(vertices.value[index], change);
+  })
   .$uses({ positionBound: vertices, iteration });
 
 const computePipeline = root['~unstable']

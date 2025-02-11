@@ -11,6 +11,9 @@ importers:
       '@webgpu/types':
         specifier: ^0.1.51
         version: 0.1.51
+      rollup-plugin-typegpu:
+        specifier: ^0.0.1
+        version: 0.0.1
       three:
         specifier: ^0.173.0
         version: 0.173.0
@@ -224,6 +227,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@jridgewell/sourcemap-codec@1.5.0':
+    resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
   '@rollup/rollup-android-arm-eabi@4.27.3':
     resolution: {integrity: sha512-EzxVSkIvCFxUd4Mgm4xR9YXrcp976qVaHnqom/Tgm+vU79k4vV4eYTjmRvGfeoW8m9LVcsAy/lGjcgVegKEhLQ==}
     cpu: [arm]
@@ -337,6 +343,9 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
+  estree-walker@3.0.3:
+    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
+
   fflate@0.8.2:
     resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
 
@@ -344,6 +353,9 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
   meshoptimizer@0.18.1:
     resolution: {integrity: sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==}
@@ -360,6 +372,9 @@ packages:
     resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
     engines: {node: ^10 || ^12 || >=14}
 
+  rollup-plugin-typegpu@0.0.1:
+    resolution: {integrity: sha512-gnzgUFoztNDIht/ij+vf0KXB3ioMQazHAm7e12tIC12PwZXa+IA0JmAQ+CiI4VcK5l5W9A+pTdKf7psGTLHzFQ==}
+
   rollup@4.27.3:
     resolution: {integrity: sha512-SLsCOnlmGt9VoZ9Ek8yBK8tAdmPHeppkw+Xa7yDlCEhDTvwYei03JlWo1fdc7YTfLZ4tD8riJCUyAgTbszk1fQ==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -371,6 +386,10 @@ packages:
 
   three@0.173.0:
     resolution: {integrity: sha512-AUwVmViIEUgBwxJJ7stnF0NkPpZxx1aZ6WiAbQ/Qq61h6I9UR4grXtZDmO8mnlaNORhHnIBlXJ1uBxILEKuVyw==}
+
+  tinyest-for-wgsl@0.1.0-alpha.0:
+    resolution: {integrity: sha512-8n/tWdTwmaxL3QGnkec0GuOxNGevm/NnGXPpbRa2DPqkk36uQEwPsXxfGoHihRXsIAMpWjWDRpOpy3OZ6f+0EQ==}
+    engines: {node: '>=12.20.0'}
 
   tinyest@0.1.0-alpha.1:
     resolution: {integrity: sha512-rTi8MVYhCYxWnk1D3EORy3Dmy0k7QL6ihSK4qA74I4vkGvUkkIaqOzZatkD6fag/yMF3MJYsb1hmEZuoliizgA==}
@@ -525,6 +544,8 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
+  '@jridgewell/sourcemap-codec@1.5.0': {}
+
   '@rollup/rollup-android-arm-eabi@4.27.3':
     optional: true
 
@@ -624,10 +645,18 @@ snapshots:
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
 
+  estree-walker@3.0.3:
+    dependencies:
+      '@types/estree': 1.0.6
+
   fflate@0.8.2: {}
 
   fsevents@2.3.3:
     optional: true
+
+  magic-string@0.30.17:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   meshoptimizer@0.18.1: {}
 
@@ -640,6 +669,12 @@ snapshots:
       nanoid: 3.3.7
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  rollup-plugin-typegpu@0.0.1:
+    dependencies:
+      estree-walker: 3.0.3
+      magic-string: 0.30.17
+      tinyest-for-wgsl: 0.1.0-alpha.0
 
   rollup@4.27.3:
     dependencies:
@@ -668,6 +703,10 @@ snapshots:
   source-map-js@1.2.1: {}
 
   three@0.173.0: {}
+
+  tinyest-for-wgsl@0.1.0-alpha.0:
+    dependencies:
+      tinyest: 0.1.0-alpha.1
 
   tinyest@0.1.0-alpha.1: {}
 
