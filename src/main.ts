@@ -24,22 +24,20 @@ const device = root.device;
 const initialCube = new THREE.BoxGeometry(1, 1, 1);
 const positions = initialCube.getAttribute('position').array;
 
-const initialData = [];
-for (let i = 0; i < positions.length; i += 3) {
-  initialData.push(
-    d.vec4f(positions[i], positions[i + 1], positions[i + 2], 0),
-  );
-}
-
 const positionBuffer = root
-  .createBuffer(d.arrayOf(d.vec4f, 24), initialData)
-  .$usage('storage', 'vertex')
-  .$name('tgpu_vertices');
-const iterationBuffer = root
-  .createBuffer(d.u32, 0)
-  .$usage('storage')
-  .$name('tgpu_iteration');
+  .createBuffer(
+    // schema
+    d.arrayOf(d.vec4f, 24),
+    // initial value (mapped at creation)
+    Array.from({ length: positions.length / 3 }, (_, i) =>
+      d.vec4f(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2], 0),
+    ),
+  )
+  .$usage('storage', 'vertex');
 
+const iterationBuffer = root.createBuffer(d.u32, 0).$usage('storage');
+
+// Creating typed bind group layout and bind group
 const computeBindGroupLayout = tgpu
   .bindGroupLayout({
     vertices: { storage: d.arrayOf(d.vec4f, 24), access: 'mutable' },
@@ -52,7 +50,11 @@ const bindGroup = root.createBindGroup(computeBindGroupLayout, {
   iteration: iterationBuffer,
 });
 
+// Getting the bound resource representation
+// It returns buffer usages that can be used inside the TGSL shader with `.value`
 const { vertices, iteration } = computeBindGroupLayout.bound;
+
+// Creating the entry function
 const shader = tgpu['~unstable']
   .computeFn({ gid: d.builtin.globalInvocationId }, { workgroupSize: [24] })
   .does((input) => {
@@ -71,10 +73,12 @@ const shader = tgpu['~unstable']
 const computePipeline = root['~unstable']
   .withCompute(shader)
   .createPipeline()
-  .$name('tgpu_pipeline')
   .with(computeBindGroupLayout, bindGroup);
 
 await init();
+
+// Utility function to create a THREE.ComputeNode based on TypeGPU resources
+// The node will share the same resources as the TypeGPU pipeline
 const tgpuCompute = await boundComputeToNode({
   fn: shader,
   buffers: [positionStorage, iterationStorage],
@@ -134,6 +138,7 @@ async function init() {
   // fog
   scene.fog = new THREE.Fog(0x0f0f0f, 1, 10);
 
+  // Creating shared buffers
   const { buffer: b, attribute: p } = getNodeForBuffer(
     positionBuffer,
     renderer,
