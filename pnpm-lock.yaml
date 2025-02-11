@@ -22,8 +22,8 @@ importers:
         specifier: ^0.173.0
         version: 0.173.0
       typegpu:
-        specifier: 0.3.2
-        version: 0.3.2
+        specifier: ^0.3.4
+        version: 0.3.4
       typescript:
         specifier: ~5.6.2
         version: 5.6.3
@@ -379,8 +379,8 @@ packages:
   typed-binary@4.3.2:
     resolution: {integrity: sha512-HT3pIBM2njCZUmeczDaQUUErGiM6GXFCqMsHegE12HCoBtvHCkfR10JJni0TeGOTnLilTd6YFyj+YhflqQDrDQ==}
 
-  typegpu@0.3.2:
-    resolution: {integrity: sha512-RB3I/oqwTaf5R4aGJ5nHJkTCt3mfPg7p8NBmSJd8h8UlBwbld/7C2+FdK1d6J4ah3NXGcq4plmh5m+hTybH/VQ==}
+  typegpu@0.3.4:
+    resolution: {integrity: sha512-4b0eBOa+lNZzP36GYxa9tJhxbGrq2wCCj4EQjci8H+fwQFmj+PGYJu2GHu4L3aVco3knI+e0YI8LyPQBgZGlmQ==}
     engines: {node: '>=12.20.0'}
 
   typescript@5.6.3:
@@ -673,7 +673,7 @@ snapshots:
 
   typed-binary@4.3.2: {}
 
-  typegpu@0.3.2:
+  typegpu@0.3.4:
     dependencies:
       tinyest: 0.1.0-alpha.1
       typed-binary: 4.3.2

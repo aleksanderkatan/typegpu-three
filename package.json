@@ -12,7 +12,7 @@
   "devDependencies": {
     "@biomejs/biome": "latest",
     "@types/three": "^0.173.0",
-    "typegpu": "0.3.2",
+    "typegpu": "^0.3.4",
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
   },
