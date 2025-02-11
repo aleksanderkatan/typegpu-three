@@ -75,15 +75,15 @@ const computePipeline = root['~unstable']
   .with(computeBindGroupLayout, bindGroup);
 
 await init();
-const tgpuCompute = await boundComputeToNode(
-  shader,
-  [positionStorage, iterationStorage],
+const tgpuCompute = await boundComputeToNode({
+  fn: shader,
+  buffers: [positionStorage, iterationStorage],
   renderer,
   device,
-  root.unwrap(computePipeline),
-  root.unwrap(bindGroup),
-  root.unwrap(computeBindGroupLayout),
-);
+  pipeline: root.unwrap(computePipeline),
+  externalBindGroup: root.unwrap(bindGroup),
+  externalLayout: root.unwrap(computeBindGroupLayout),
+});
 
 async function init() {
   renderer = new THREE.WebGPURenderer({

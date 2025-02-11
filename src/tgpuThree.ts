@@ -60,18 +60,32 @@ export function getNodeForBuffer<T extends d.WgslArray | d.U32 | d.F32 | d.I32>(
   };
 }
 
+export type BoundComputeToNodeArgs = {
+  fn: TgpuComputeFn;
+  buffers: THREE.StorageBufferNode[];
+  renderer: THREE.WebGPURenderer;
+  device: GPUDevice;
+  pipeline: GPUComputePipeline;
+  externalBindGroup: GPUBindGroup;
+  externalLayout: GPUBindGroupLayout;
+};
+
 export async function boundComputeToNode(
-  fn: TgpuComputeFn,
-  buffers: THREE.StorageBufferNode[],
-  renderer: THREE.WebGPURenderer,
-  device: GPUDevice,
-  pipeline: GPUComputePipeline,
-  externalBindGroup: GPUBindGroup,
-  externalLayout: GPUBindGroupLayout,
+  args: BoundComputeToNodeArgs,
 ): Promise<{
   computeNode: THREE.ComputeNode;
   codeNode: THREE.CodeNode;
 }> {
+  const {
+    fn,
+    buffers,
+    renderer,
+    device,
+    pipeline,
+    externalBindGroup,
+    externalLayout,
+  } = args;
+
   if (!renderer._initialized) {
     await renderer.init();
   }
