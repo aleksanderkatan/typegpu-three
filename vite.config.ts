@@ -1,4 +1,4 @@
-import typegpu from 'rollup-plugin-typegpu';
+import typegpu from 'unplugin-typegpu/rollup';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
