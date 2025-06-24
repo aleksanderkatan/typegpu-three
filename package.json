@@ -10,16 +10,16 @@
     "check": "biome check --write ."
   },
   "devDependencies": {
-    "@biomejs/biome": "latest",
-    "@types/three": "^0.173.0",
-    "typegpu": "^0.3.4",
-    "typescript": "~5.6.2",
-    "vite": "^5.4.10"
+    "@biomejs/biome": "^2.0.5",
+    "@types/three": "^0.177.0",
+    "typegpu": "^0.5.9",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0"
   },
   "dependencies": {
     "@webgpu/types": "^0.1.61",
     "three": "^0.177.0",
-    "unplugin-typegpu": "0.1.0-alpha.2"
+    "unplugin-typegpu": "0.1.4"
   },
   "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
 }

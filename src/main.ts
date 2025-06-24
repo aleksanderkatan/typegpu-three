@@ -56,8 +56,8 @@ const { vertices, iteration } = computeBindGroupLayout.bound;
 
 // Creating the entry function
 const shader = tgpu['~unstable']
-  .computeFn({ gid: d.builtin.globalInvocationId }, { workgroupSize: [24] })
-  .does((input) => {
+  .computeFn({in:{ gid: d.builtin.globalInvocationId }, workgroupSize: [24] })
+  ((input) => {
     const index = input.gid.x;
     const iterationF = d.f32(iteration.value);
     const sign = d.i32(index % 16) * -1;
@@ -88,6 +88,7 @@ const tgpuCompute = await boundComputeToNode({
   externalBindGroup: root.unwrap(bindGroup),
   externalLayout: root.unwrap(computeBindGroupLayout),
 });
+
 
 async function init() {
   renderer = new THREE.WebGPURenderer({
